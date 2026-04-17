@@ -1,0 +1,3246 @@
+{
+    "openapi": "3.0.3",
+    "info": {
+        "title": "星返PC端转链接口文档",
+        "version": "1.0.0",
+        "description": "星返PC端转链系统接口文档（中文）"
+    },
+    "paths": {
+        "/": {
+            "post": {
+                "summary": "服务入口",
+                "operationId": "postHome",
+                "tags": [
+                    "系统"
+                ],
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "成功",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "required": [
+                                        "data"
+                                    ]
+                                },
+                                "example": {
+                                    "data": {
+                                        "name": "星返PC端转链系统",
+                                        "env": "local",
+                                        "status": "running",
+                                        "message": "API 服务已启动",
+                                        "links": {
+                                            "health": "/health",
+                                            "benchmark": "/benchmark",
+                                            "openapi": "/openapi.json"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/BadRequest"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/ServerError"
+                    }
+                },
+                "description": "服务入口",
+                "requestBody": {
+                    "required": false,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {}
+                            },
+                            "example": {}
+                        }
+                    }
+                }
+            }
+        },
+        "/health": {
+            "post": {
+                "summary": "健康检查",
+                "operationId": "postHealth",
+                "tags": [
+                    "健康检查"
+                ],
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "成功",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "required": [
+                                        "data"
+                                    ]
+                                },
+                                "example": {
+                                    "data": {
+                                        "ok": true,
+                                        "db": true,
+                                        "cache": {
+                                            "working": true,
+                                            "driver": "file"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/BadRequest"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/ServerError"
+                    }
+                },
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "db": {
+                                        "type": "string"
+                                    },
+                                    "cache": {
+                                        "type": "string"
+                                    }
+                                }
+                            },
+                            "example": {
+                                "db": "1",
+                                "cache": "1"
+                            }
+                        }
+                    }
+                },
+                "description": "健康检查"
+            }
+        },
+        "/benchmark": {
+            "post": {
+                "summary": "性能测试",
+                "operationId": "postBenchmark",
+                "tags": [
+                    "系统"
+                ],
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "成功",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "required": [
+                                        "data"
+                                    ]
+                                },
+                                "example": {
+                                    "data": {
+                                        "message": "你好，世界！",
+                                        "timestamp": "2026-04-17 12:00:00"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/BadRequest"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/ServerError"
+                    }
+                },
+                "description": "性能测试",
+                "requestBody": {
+                    "required": false,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {}
+                            },
+                            "example": {}
+                        }
+                    }
+                }
+            }
+        },
+        "/auth/signup": {
+            "post": {
+                "summary": "用户注册",
+                "operationId": "postSignup",
+                "tags": [
+                    "认证"
+                ],
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "成功",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "token": {
+                                                    "type": "string"
+                                                },
+                                                "token_type": {
+                                                    "type": "string"
+                                                },
+                                                "expires_at": {
+                                                    "type": "string"
+                                                },
+                                                "user": {
+                                                    "type": "object",
+                                                    "properties": [],
+                                                    "additionalProperties": true
+                                                }
+                                            },
+                                            "required": [
+                                                "token",
+                                                "token_type",
+                                                "expires_at",
+                                                "user"
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "data"
+                                    ]
+                                },
+                                "example": {
+                                    "data": {
+                                        "token": "xf_2f6d7d3647d04d3792d41275d1cda8d9",
+                                        "token_type": "Bearer",
+                                        "expires_at": "2026-05-17 12:00:00",
+                                        "user": {
+                                            "id": 1,
+                                            "user_name": "双若汐",
+                                            "email": "fselj5_klv@vip.qq.com",
+                                            "mobile": "13868478533",
+                                            "role": "user",
+                                            "active": true,
+                                            "created_at": "2026-04-17 12:00:00",
+                                            "updated_at": "2026-04-17 12:00:00"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/BadRequest"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/ServerError"
+                    }
+                },
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "user_name": {
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "type": "string"
+                                    },
+                                    "mobile": {
+                                        "type": "string"
+                                    },
+                                    "remember": {
+                                        "type": "boolean"
+                                    }
+                                }
+                            },
+                            "example": {
+                                "user_name": "双若汐",
+                                "email": "fselj5_klv@vip.qq.com",
+                                "password": "bmR5pJ3N1oam9UP",
+                                "mobile": "13868478533",
+                                "remember": true
+                            }
+                        }
+                    }
+                },
+                "description": "用户注册"
+            }
+        },
+        "/auth/login": {
+            "post": {
+                "summary": "账号密码登录",
+                "operationId": "postLogin",
+                "tags": [
+                    "认证"
+                ],
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "成功",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "token": {
+                                                    "type": "string"
+                                                },
+                                                "token_type": {
+                                                    "type": "string"
+                                                },
+                                                "expires_at": {
+                                                    "type": "string"
+                                                },
+                                                "user": {
+                                                    "type": "object",
+                                                    "properties": [],
+                                                    "additionalProperties": true
+                                                }
+                                            },
+                                            "required": [
+                                                "token",
+                                                "token_type",
+                                                "expires_at",
+                                                "user"
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "data"
+                                    ]
+                                },
+                                "example": {
+                                    "data": {
+                                        "token": "xf_2f6d7d3647d04d3792d41275d1cda8d9",
+                                        "token_type": "Bearer",
+                                        "expires_at": "2026-05-17 12:00:00",
+                                        "user": {
+                                            "id": 1,
+                                            "user_name": "双若汐",
+                                            "email": "fselj5_klv@vip.qq.com",
+                                            "mobile": "13868478533",
+                                            "role": "user",
+                                            "active": true,
+                                            "created_at": "2026-04-17 12:00:00",
+                                            "updated_at": "2026-04-17 12:00:00"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/BadRequest"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/ServerError"
+                    }
+                },
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "account": {
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "type": "string"
+                                    },
+                                    "remember": {
+                                        "type": "boolean"
+                                    }
+                                }
+                            },
+                            "example": {
+                                "account": "13868478533",
+                                "password": "bmR5pJ3N1oam9UP",
+                                "remember": true
+                            }
+                        }
+                    }
+                },
+                "description": "账号密码登录"
+            }
+        },
+        "/auth/sms-code": {
+            "post": {
+                "summary": "发送短信验证码",
+                "operationId": "postSmsCode",
+                "tags": [
+                    "认证"
+                ],
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "成功",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "success": {
+                                                    "type": "boolean"
+                                                },
+                                                "message": {
+                                                    "type": "string"
+                                                },
+                                                "retry_after": {
+                                                    "type": "integer"
+                                                },
+                                                "expires_in": {
+                                                    "type": "integer"
+                                                },
+                                                "mobile": {
+                                                    "type": "string"
+                                                },
+                                                "debug_code": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "required": [
+                                                "success",
+                                                "message",
+                                                "retry_after",
+                                                "expires_in",
+                                                "mobile",
+                                                "debug_code"
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "data"
+                                    ]
+                                },
+                                "example": {
+                                    "data": {
+                                        "success": true,
+                                        "message": "验证码已发送，请注意查收",
+                                        "retry_after": 60,
+                                        "expires_in": 300,
+                                        "mobile": "13868478533",
+                                        "debug_code": "123456"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/BadRequest"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/ServerError"
+                    }
+                },
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "mobile": {
+                                        "type": "string"
+                                    }
+                                }
+                            },
+                            "example": {
+                                "mobile": "13868478533"
+                            }
+                        }
+                    }
+                },
+                "description": "发送短信验证码"
+            }
+        },
+        "/auth/sms-login": {
+            "post": {
+                "summary": "短信验证码登录",
+                "operationId": "postSmsLogin",
+                "tags": [
+                    "认证"
+                ],
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "成功",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "token": {
+                                                    "type": "string"
+                                                },
+                                                "token_type": {
+                                                    "type": "string"
+                                                },
+                                                "expires_at": {
+                                                    "type": "string"
+                                                },
+                                                "user": {
+                                                    "type": "object",
+                                                    "properties": [],
+                                                    "additionalProperties": true
+                                                }
+                                            },
+                                            "required": [
+                                                "token",
+                                                "token_type",
+                                                "expires_at",
+                                                "user"
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "data"
+                                    ]
+                                },
+                                "example": {
+                                    "data": {
+                                        "token": "xf_2f6d7d3647d04d3792d41275d1cda8d9",
+                                        "token_type": "Bearer",
+                                        "expires_at": "2026-05-17 12:00:00",
+                                        "user": {
+                                            "id": 1,
+                                            "user_name": "双若汐",
+                                            "email": "fselj5_klv@vip.qq.com",
+                                            "mobile": "13868478533",
+                                            "role": "user",
+                                            "active": true,
+                                            "created_at": "2026-04-17 12:00:00",
+                                            "updated_at": "2026-04-17 12:00:00"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/BadRequest"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/ServerError"
+                    }
+                },
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "mobile": {
+                                        "type": "string"
+                                    },
+                                    "sms_code": {
+                                        "type": "string"
+                                    },
+                                    "remember": {
+                                        "type": "boolean"
+                                    }
+                                }
+                            },
+                            "example": {
+                                "mobile": "13868478533",
+                                "sms_code": "123456",
+                                "remember": true
+                            }
+                        }
+                    }
+                },
+                "description": "短信验证码登录"
+            }
+        },
+        "/auth/logout": {
+            "post": {
+                "summary": "退出登录",
+                "operationId": "postLogout",
+                "tags": [
+                    "认证"
+                ],
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "成功",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "message": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "required": [
+                                                "message"
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "data"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/BadRequest"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/ServerError"
+                    }
+                },
+                "description": "退出登录",
+                "requestBody": {
+                    "required": false,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {}
+                            },
+                            "example": {}
+                        }
+                    }
+                }
+            }
+        },
+        "/auth/qr-login": {
+            "post": {
+                "summary": "创建扫码登录二维码",
+                "operationId": "postQrLoginCreate",
+                "tags": [
+                    "二维码登录"
+                ],
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "成功",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "scene": {
+                                                    "type": "string"
+                                                },
+                                                "ticket_id": {
+                                                    "type": "string"
+                                                },
+                                                "poll_token": {
+                                                    "type": "string"
+                                                },
+                                                "status": {
+                                                    "type": "string"
+                                                },
+                                                "qr_content": {
+                                                    "type": "string"
+                                                },
+                                                "qr_image_data_url": {
+                                                    "type": "string"
+                                                },
+                                                "expires_in": {
+                                                    "type": "integer"
+                                                },
+                                                "created_at": {
+                                                    "type": "string"
+                                                },
+                                                "expires_at": {
+                                                    "type": "string"
+                                                },
+                                                "scanned_at": {
+                                                    "type": "string"
+                                                },
+                                                "confirmed_at": {
+                                                    "type": "string"
+                                                },
+                                                "logged_in_at": {
+                                                    "type": "string"
+                                                },
+                                                "user": {
+                                                    "type": "object",
+                                                    "properties": [],
+                                                    "additionalProperties": true
+                                                }
+                                            },
+                                            "required": [
+                                                "scene",
+                                                "ticket_id",
+                                                "poll_token",
+                                                "status",
+                                                "qr_content",
+                                                "qr_image_data_url",
+                                                "expires_in",
+                                                "created_at",
+                                                "expires_at",
+                                                "scanned_at",
+                                                "confirmed_at",
+                                                "logged_in_at",
+                                                "user"
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "data"
+                                    ]
+                                },
+                                "example": {
+                                    "data": {
+                                        "scene": "xingfan_pc_transfer_login",
+                                        "ticket_id": "ca31ee6b0b32511d47e87b1fd0b0392c",
+                                        "poll_token": "8c9ac53fc5c67d1ddf16d1f4eb79f13d",
+                                        "status": "pending",
+                                        "qr_content": "xingfanapp://pc-transfer-login?scene=xingfan_pc_transfer_login&ticket_id=ca31ee6b0b32511d47e87b1fd0b0392c",
+                                        "qr_image_data_url": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAA...",
+                                        "expires_in": 180,
+                                        "created_at": "2026-04-17 12:00:00",
+                                        "expires_at": "2026-04-17 12:03:00",
+                                        "scanned_at": "",
+                                        "confirmed_at": "",
+                                        "logged_in_at": "",
+                                        "user": {}
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/BadRequest"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/ServerError"
+                    }
+                },
+                "description": "创建扫码登录二维码",
+                "requestBody": {
+                    "required": false,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {}
+                            },
+                            "example": {}
+                        }
+                    }
+                }
+            }
+        },
+        "/auth/qr-login/status": {
+            "post": {
+                "summary": "查询扫码登录状态",
+                "operationId": "postQrLoginStatus",
+                "tags": [
+                    "二维码登录"
+                ],
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "成功",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "scene": {
+                                                    "type": "string"
+                                                },
+                                                "ticket_id": {
+                                                    "type": "string"
+                                                },
+                                                "status": {
+                                                    "type": "string"
+                                                },
+                                                "qr_content": {
+                                                    "type": "string"
+                                                },
+                                                "expires_in": {
+                                                    "type": "integer"
+                                                },
+                                                "created_at": {
+                                                    "type": "string"
+                                                },
+                                                "expires_at": {
+                                                    "type": "string"
+                                                },
+                                                "scanned_at": {
+                                                    "type": "string"
+                                                },
+                                                "confirmed_at": {
+                                                    "type": "string"
+                                                },
+                                                "logged_in_at": {
+                                                    "type": "string"
+                                                },
+                                                "user": {
+                                                    "type": "object",
+                                                    "properties": [],
+                                                    "additionalProperties": true
+                                                },
+                                                "auth": {
+                                                    "type": "object",
+                                                    "properties": [],
+                                                    "additionalProperties": true
+                                                }
+                                            },
+                                            "required": [
+                                                "scene",
+                                                "ticket_id",
+                                                "status",
+                                                "qr_content",
+                                                "expires_in",
+                                                "created_at",
+                                                "expires_at",
+                                                "scanned_at",
+                                                "confirmed_at",
+                                                "logged_in_at",
+                                                "user",
+                                                "auth"
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "data"
+                                    ]
+                                },
+                                "example": {
+                                    "data": {
+                                        "scene": "xingfan_pc_transfer_login",
+                                        "ticket_id": "ca31ee6b0b32511d47e87b1fd0b0392c",
+                                        "status": "confirmed",
+                                        "qr_content": "xingfanapp://pc-transfer-login?scene=xingfan_pc_transfer_login&ticket_id=ca31ee6b0b32511d47e87b1fd0b0392c",
+                                        "expires_in": 108,
+                                        "created_at": "2026-04-17 12:00:00",
+                                        "expires_at": "2026-04-17 12:03:00",
+                                        "scanned_at": "2026-04-17 12:01:02",
+                                        "confirmed_at": "2026-04-17 12:01:08",
+                                        "logged_in_at": "2026-04-17 12:01:10",
+                                        "user": {
+                                            "id": "1",
+                                            "user_name": "双若汐",
+                                            "email": "fselj5_klv@vip.qq.com",
+                                            "mobile": "13868478533",
+                                            "role": "user"
+                                        },
+                                        "auth": {
+                                            "token": "xf_2f6d7d3647d04d3792d41275d1cda8d9",
+                                            "token_type": "Bearer",
+                                            "expires_at": "2026-05-17 12:00:00",
+                                            "user": {
+                                                "id": 1,
+                                                "user_name": "双若汐",
+                                                "email": "fselj5_klv@vip.qq.com",
+                                                "mobile": "13868478533",
+                                                "role": "user",
+                                                "active": true,
+                                                "created_at": "2026-04-17 12:00:00",
+                                                "updated_at": "2026-04-17 12:00:00"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/BadRequest"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/ServerError"
+                    }
+                },
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "ticket_id": {
+                                        "type": "string"
+                                    },
+                                    "poll_token": {
+                                        "type": "string"
+                                    },
+                                    "remember": {
+                                        "type": "boolean"
+                                    }
+                                }
+                            },
+                            "example": {
+                                "ticket_id": "ca31ee6b0b32511d47e87b1fd0b0392c",
+                                "poll_token": "8c9ac53fc5c67d1ddf16d1f4eb79f13d",
+                                "remember": true
+                            }
+                        }
+                    }
+                },
+                "description": "查询扫码登录状态"
+            }
+        },
+        "/auth/qr-login/scan": {
+            "post": {
+                "summary": "手机端标记已扫码",
+                "operationId": "postQrLoginScan",
+                "tags": [
+                    "二维码登录"
+                ],
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "成功",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "scene": {
+                                                    "type": "string"
+                                                },
+                                                "ticket_id": {
+                                                    "type": "string"
+                                                },
+                                                "status": {
+                                                    "type": "string"
+                                                },
+                                                "qr_content": {
+                                                    "type": "string"
+                                                },
+                                                "expires_in": {
+                                                    "type": "integer"
+                                                },
+                                                "created_at": {
+                                                    "type": "string"
+                                                },
+                                                "expires_at": {
+                                                    "type": "string"
+                                                },
+                                                "scanned_at": {
+                                                    "type": "string"
+                                                },
+                                                "confirmed_at": {
+                                                    "type": "string"
+                                                },
+                                                "logged_in_at": {
+                                                    "type": "string"
+                                                },
+                                                "user": {
+                                                    "type": "object",
+                                                    "properties": [],
+                                                    "additionalProperties": true
+                                                }
+                                            },
+                                            "required": [
+                                                "scene",
+                                                "ticket_id",
+                                                "status",
+                                                "qr_content",
+                                                "expires_in",
+                                                "created_at",
+                                                "expires_at",
+                                                "scanned_at",
+                                                "confirmed_at",
+                                                "logged_in_at",
+                                                "user"
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "data"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/BadRequest"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/ServerError"
+                    }
+                },
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "ticket_id": {
+                                        "type": "string"
+                                    }
+                                }
+                            },
+                            "example": {
+                                "ticket_id": "ca31ee6b0b32511d47e87b1fd0b0392c"
+                            }
+                        }
+                    }
+                },
+                "description": "手机端标记已扫码"
+            }
+        },
+        "/auth/qr-login/confirm": {
+            "post": {
+                "summary": "手机端确认二维码登录",
+                "operationId": "postQrLoginConfirm",
+                "tags": [
+                    "二维码登录"
+                ],
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "成功",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "scene": {
+                                                    "type": "string"
+                                                },
+                                                "ticket_id": {
+                                                    "type": "string"
+                                                },
+                                                "status": {
+                                                    "type": "string"
+                                                },
+                                                "qr_content": {
+                                                    "type": "string"
+                                                },
+                                                "expires_in": {
+                                                    "type": "integer"
+                                                },
+                                                "created_at": {
+                                                    "type": "string"
+                                                },
+                                                "expires_at": {
+                                                    "type": "string"
+                                                },
+                                                "scanned_at": {
+                                                    "type": "string"
+                                                },
+                                                "confirmed_at": {
+                                                    "type": "string"
+                                                },
+                                                "logged_in_at": {
+                                                    "type": "string"
+                                                },
+                                                "user": {
+                                                    "type": "object",
+                                                    "properties": [],
+                                                    "additionalProperties": true
+                                                }
+                                            },
+                                            "required": [
+                                                "scene",
+                                                "ticket_id",
+                                                "status",
+                                                "qr_content",
+                                                "expires_in",
+                                                "created_at",
+                                                "expires_at",
+                                                "scanned_at",
+                                                "confirmed_at",
+                                                "logged_in_at",
+                                                "user"
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "data"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/BadRequest"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/ServerError"
+                    }
+                },
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "ticket_id": {
+                                        "type": "string"
+                                    }
+                                }
+                            },
+                            "example": {
+                                "ticket_id": "ca31ee6b0b32511d47e87b1fd0b0392c"
+                            }
+                        }
+                    }
+                },
+                "description": "手机端确认二维码登录"
+            }
+        },
+        "/me": {
+            "post": {
+                "summary": "获取当前用户信息",
+                "operationId": "postProfile",
+                "tags": [
+                    "用户"
+                ],
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "成功",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "user": {
+                                                    "type": "object",
+                                                    "properties": [],
+                                                    "additionalProperties": true
+                                                }
+                                            },
+                                            "required": [
+                                                "user"
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "data"
+                                    ]
+                                },
+                                "example": {
+                                    "data": {
+                                        "user": {
+                                            "id": 1,
+                                            "user_name": "双若汐",
+                                            "email": "fselj5_klv@vip.qq.com",
+                                            "mobile": "13868478533",
+                                            "role": "user",
+                                            "active": true,
+                                            "created_at": "2026-04-17 12:00:00",
+                                            "updated_at": "2026-04-17 12:00:00"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/BadRequest"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/ServerError"
+                    }
+                },
+                "description": "获取当前用户信息",
+                "requestBody": {
+                    "required": false,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {}
+                            },
+                            "example": {}
+                        }
+                    }
+                }
+            }
+        },
+        "/agreements/current": {
+            "post": {
+                "summary": "获取当前协议",
+                "operationId": "postUserAgreement",
+                "tags": [
+                    "协议"
+                ],
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "成功",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "agreement": {
+                                                    "$ref": "#/components/schemas/AgreementDetailSchema"
+                                                }
+                                            },
+                                            "required": [
+                                                "agreement"
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "data"
+                                    ]
+                                },
+                                "example": {
+                                    "data": {
+                                        "agreement": {
+                                            "id": 1,
+                                            "type": "user",
+                                            "type_name": "用户协议",
+                                            "version": "1.0.0",
+                                            "title": "星返用户协议",
+                                            "content": "这里是协议正文内容。",
+                                            "summary": "平台用户使用协议说明",
+                                            "status": 1,
+                                            "status_text": "启用",
+                                            "is_required": 1,
+                                            "effective_time": "2026-04-17 00:00:00",
+                                            "published_by": "system",
+                                            "published_at": "2026-04-17 00:00:00",
+                                            "created_at": "2026-04-17 00:00:00",
+                                            "updated_at": "2026-04-17 00:00:00"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/BadRequest"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/ServerError"
+                    }
+                },
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "id": {
+                                        "type": "string"
+                                    },
+                                    "type": {
+                                        "type": "string"
+                                    },
+                                    "version": {
+                                        "type": "string"
+                                    }
+                                }
+                            },
+                            "example": {
+                                "type": "user"
+                            }
+                        }
+                    }
+                },
+                "description": "获取当前协议"
+            }
+        },
+        "/user-agreements/current": {
+            "post": {
+                "summary": "获取当前用户协议",
+                "operationId": "postUserAgreement",
+                "tags": [
+                    "协议"
+                ],
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "成功",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "agreement": {
+                                                    "$ref": "#/components/schemas/AgreementDetailSchema"
+                                                }
+                                            },
+                                            "required": [
+                                                "agreement"
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "data"
+                                    ]
+                                },
+                                "example": {
+                                    "data": {
+                                        "agreement": {
+                                            "id": 1,
+                                            "type": "user",
+                                            "type_name": "用户协议",
+                                            "version": "1.0.0",
+                                            "title": "星返用户协议",
+                                            "content": "这里是协议正文内容。",
+                                            "summary": "平台用户使用协议说明",
+                                            "status": 1,
+                                            "status_text": "启用",
+                                            "is_required": 1,
+                                            "effective_time": "2026-04-17 00:00:00",
+                                            "published_by": "system",
+                                            "published_at": "2026-04-17 00:00:00",
+                                            "created_at": "2026-04-17 00:00:00",
+                                            "updated_at": "2026-04-17 00:00:00"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/BadRequest"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/ServerError"
+                    }
+                },
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "id": {
+                                        "type": "string"
+                                    },
+                                    "type": {
+                                        "type": "string"
+                                    },
+                                    "version": {
+                                        "type": "string"
+                                    }
+                                }
+                            },
+                            "example": {
+                                "type": "user"
+                            }
+                        }
+                    }
+                },
+                "description": "获取当前用户协议"
+            }
+        },
+        "/agreements/history": {
+            "post": {
+                "summary": "获取协议历史版本",
+                "operationId": "postUserAgreement",
+                "tags": [
+                    "协议"
+                ],
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "成功",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "items": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "$ref": "#/components/schemas/AgreementListItemSchema"
+                                                    }
+                                                }
+                                            },
+                                            "required": [
+                                                "items"
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "data"
+                                    ]
+                                },
+                                "example": {
+                                    "data": {
+                                        "items": [
+                                            {
+                                                "id": 1,
+                                                "type": "privacy",
+                                                "type_name": "隐私政策",
+                                                "version": "1.0.0",
+                                                "title": "星返隐私政策",
+                                                "summary": "隐私收集和使用说明",
+                                                "status": 1,
+                                                "status_text": "启用",
+                                                "is_required": 1,
+                                                "effective_time": "2026-04-17 00:00:00",
+                                                "published_by": "system",
+                                                "published_at": "2026-04-17 00:00:00",
+                                                "created_at": "2026-04-17 00:00:00",
+                                                "updated_at": "2026-04-17 00:00:00"
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/BadRequest"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/ServerError"
+                    }
+                },
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "id": {
+                                        "type": "string"
+                                    },
+                                    "type": {
+                                        "type": "string"
+                                    },
+                                    "version": {
+                                        "type": "string"
+                                    }
+                                }
+                            },
+                            "example": {
+                                "type": "privacy"
+                            }
+                        }
+                    }
+                },
+                "description": "获取协议历史版本"
+            }
+        },
+        "/user-agreements/history": {
+            "post": {
+                "summary": "获取用户协议历史版本",
+                "operationId": "postUserAgreement",
+                "tags": [
+                    "协议"
+                ],
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "成功",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "items": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "$ref": "#/components/schemas/AgreementListItemSchema"
+                                                    }
+                                                }
+                                            },
+                                            "required": [
+                                                "items"
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "data"
+                                    ]
+                                },
+                                "example": {
+                                    "data": {
+                                        "items": [
+                                            {
+                                                "id": 1,
+                                                "type": "privacy",
+                                                "type_name": "隐私政策",
+                                                "version": "1.0.0",
+                                                "title": "星返隐私政策",
+                                                "summary": "隐私收集和使用说明",
+                                                "status": 1,
+                                                "status_text": "启用",
+                                                "is_required": 1,
+                                                "effective_time": "2026-04-17 00:00:00",
+                                                "published_by": "system",
+                                                "published_at": "2026-04-17 00:00:00",
+                                                "created_at": "2026-04-17 00:00:00",
+                                                "updated_at": "2026-04-17 00:00:00"
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/BadRequest"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/ServerError"
+                    }
+                },
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "id": {
+                                        "type": "string"
+                                    },
+                                    "type": {
+                                        "type": "string"
+                                    },
+                                    "version": {
+                                        "type": "string"
+                                    }
+                                }
+                            },
+                            "example": {
+                                "type": "privacy"
+                            }
+                        }
+                    }
+                },
+                "description": "获取用户协议历史版本"
+            }
+        },
+        "/agreements/detail": {
+            "post": {
+                "summary": "获取协议详情",
+                "operationId": "postUserAgreement",
+                "tags": [
+                    "协议"
+                ],
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "成功",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "agreement": {
+                                                    "$ref": "#/components/schemas/AgreementDetailSchema"
+                                                }
+                                            },
+                                            "required": [
+                                                "agreement"
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "data"
+                                    ]
+                                },
+                                "example": {
+                                    "data": {
+                                        "agreement": {
+                                            "id": 1,
+                                            "type": "user",
+                                            "type_name": "用户协议",
+                                            "version": "1.0.0",
+                                            "title": "星返用户协议",
+                                            "content": "这里是协议正文内容。",
+                                            "summary": "平台用户使用协议说明",
+                                            "status": 1,
+                                            "status_text": "启用",
+                                            "is_required": 1,
+                                            "effective_time": "2026-04-17 00:00:00",
+                                            "published_by": "system",
+                                            "published_at": "2026-04-17 00:00:00",
+                                            "created_at": "2026-04-17 00:00:00",
+                                            "updated_at": "2026-04-17 00:00:00"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/BadRequest"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/ServerError"
+                    }
+                },
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "id": {
+                                        "type": "string"
+                                    },
+                                    "type": {
+                                        "type": "string"
+                                    },
+                                    "version": {
+                                        "type": "string"
+                                    }
+                                }
+                            },
+                            "example": {
+                                "id": "1"
+                            }
+                        }
+                    }
+                },
+                "description": "获取协议详情"
+            }
+        },
+        "/user-agreements/detail": {
+            "post": {
+                "summary": "获取用户协议详情",
+                "operationId": "postUserAgreement",
+                "tags": [
+                    "协议"
+                ],
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "成功",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "agreement": {
+                                                    "$ref": "#/components/schemas/AgreementDetailSchema"
+                                                }
+                                            },
+                                            "required": [
+                                                "agreement"
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "data"
+                                    ]
+                                },
+                                "example": {
+                                    "data": {
+                                        "agreement": {
+                                            "id": 1,
+                                            "type": "user",
+                                            "type_name": "用户协议",
+                                            "version": "1.0.0",
+                                            "title": "星返用户协议",
+                                            "content": "这里是协议正文内容。",
+                                            "summary": "平台用户使用协议说明",
+                                            "status": 1,
+                                            "status_text": "启用",
+                                            "is_required": 1,
+                                            "effective_time": "2026-04-17 00:00:00",
+                                            "published_by": "system",
+                                            "published_at": "2026-04-17 00:00:00",
+                                            "created_at": "2026-04-17 00:00:00",
+                                            "updated_at": "2026-04-17 00:00:00"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/BadRequest"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/ServerError"
+                    }
+                },
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "id": {
+                                        "type": "string"
+                                    },
+                                    "type": {
+                                        "type": "string"
+                                    },
+                                    "version": {
+                                        "type": "string"
+                                    }
+                                }
+                            },
+                            "example": {
+                                "id": "1"
+                            }
+                        }
+                    }
+                },
+                "description": "获取用户协议详情"
+            }
+        },
+        "/transfer/convert": {
+            "post": {
+                "summary": "普通转链",
+                "operationId": "postTransferConvert",
+                "tags": [
+                    "转链"
+                ],
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "成功",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "type": {
+                                                    "type": "string"
+                                                },
+                                                "lines": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                "result_url": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "required": [
+                                                "type",
+                                                "lines",
+                                                "result_url"
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "data"
+                                    ]
+                                },
+                                "example": {
+                                    "data": {
+                                        "type": "convert",
+                                        "lines": [
+                                            "淘宝口令：￥a1B2C3D4E5F￥",
+                                            "结果链接：https://demo.example.com/transfer/20260417120000"
+                                        ],
+                                        "result_url": "https://demo.example.com/transfer/20260417120000"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/BadRequest"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/ServerError"
+                    }
+                },
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "content": {
+                                        "type": "string"
+                                    }
+                                }
+                            },
+                            "example": {
+                                "content": "https://item.taobao.com/item.htm?id=1234567890\nhttps://detail.tmall.com/item.htm?id=1234567890"
+                            }
+                        }
+                    }
+                },
+                "description": "普通转链"
+            }
+        },
+        "/transfer/short-link": {
+            "post": {
+                "summary": "生成短链",
+                "operationId": "postTransferShortLink",
+                "tags": [
+                    "转链"
+                ],
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "成功",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "type": {
+                                                    "type": "string"
+                                                },
+                                                "lines": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                "result_url": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "required": [
+                                                "type",
+                                                "lines",
+                                                "result_url"
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "data"
+                                    ]
+                                },
+                                "example": {
+                                    "data": {
+                                        "type": "short-link",
+                                        "lines": [
+                                            "短链地址：https://demo.example.com/s/7bc82e19",
+                                            "结果链接：https://demo.example.com/s/7bc82e19"
+                                        ],
+                                        "result_url": "https://demo.example.com/s/7bc82e19"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/BadRequest"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/ServerError"
+                    }
+                },
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "content": {
+                                        "type": "string"
+                                    }
+                                }
+                            },
+                            "example": {
+                                "content": "https://item.taobao.com/item.htm?id=1234567890\nhttps://detail.tmall.com/item.htm?id=1234567890"
+                            }
+                        }
+                    }
+                },
+                "description": "生成短链"
+            }
+        },
+        "/openapi.json": {
+            "post": {
+                "summary": "获取OpenAPI文档",
+                "operationId": "postOpenApi",
+                "tags": [
+                    "系统"
+                ],
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "成功",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "required": [
+                                        "data"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/BadRequest"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/ServerError"
+                    }
+                },
+                "description": "获取OpenAPI文档",
+                "requestBody": {
+                    "required": false,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {}
+                            },
+                            "example": {}
+                        }
+                    }
+                }
+            }
+        },
+        "/stream": {
+            "post": {
+                "summary": "流式响应测试",
+                "operationId": "postStream",
+                "tags": [
+                    "系统"
+                ],
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "成功",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "required": [
+                                        "data"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/BadRequest"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/ServerError"
+                    }
+                },
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "prompt": {
+                                        "type": "string"
+                                    }
+                                }
+                            },
+                            "example": {
+                                "prompt": "请返回一段测试流式响应的文本"
+                            }
+                        }
+                    }
+                },
+                "description": "流式响应测试"
+            }
+        },
+        "/admin/dashboard": {
+            "post": {
+                "summary": "获取后台仪表盘",
+                "operationId": "postDashboard",
+                "tags": [
+                    "管理后台"
+                ],
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "成功",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "cards": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "object"
+                                                    }
+                                                }
+                                            },
+                                            "required": [
+                                                "cards"
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "data"
+                                    ]
+                                },
+                                "example": {
+                                    "data": {
+                                        "cards": [
+                                            {
+                                                "label": "用户数",
+                                                "value": 128
+                                            },
+                                            {
+                                                "label": "今日转链",
+                                                "value": 36
+                                            },
+                                            {
+                                                "label": "短链生成",
+                                                "value": 18
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/BadRequest"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/ServerError"
+                    }
+                },
+                "description": "获取后台仪表盘",
+                "requestBody": {
+                    "required": false,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {}
+                            },
+                            "example": {}
+                        }
+                    }
+                }
+            }
+        },
+        "/admin/agreements": {
+            "post": {
+                "summary": "获取后台协议列表",
+                "operationId": "postUserAgreement",
+                "tags": [
+                    "管理后台"
+                ],
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "成功",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "items": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "$ref": "#/components/schemas/AgreementListItemSchema"
+                                                    }
+                                                }
+                                            },
+                                            "required": [
+                                                "items"
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "data"
+                                    ]
+                                },
+                                "example": {
+                                    "data": {
+                                        "items": [
+                                            {
+                                                "id": 1,
+                                                "type": "privacy",
+                                                "type_name": "隐私政策",
+                                                "version": "1.0.0",
+                                                "title": "星返隐私政策",
+                                                "summary": "隐私收集和使用说明",
+                                                "status": 1,
+                                                "status_text": "启用",
+                                                "is_required": 1,
+                                                "effective_time": "2026-04-17 00:00:00",
+                                                "published_by": "system",
+                                                "published_at": "2026-04-17 00:00:00",
+                                                "created_at": "2026-04-17 00:00:00",
+                                                "updated_at": "2026-04-17 00:00:00"
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/BadRequest"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/ServerError"
+                    }
+                },
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "id": {
+                                        "type": "string"
+                                    },
+                                    "type": {
+                                        "type": "string"
+                                    },
+                                    "version": {
+                                        "type": "string"
+                                    },
+                                    "title": {
+                                        "type": "string"
+                                    },
+                                    "content": {
+                                        "type": "string"
+                                    },
+                                    "summary": {
+                                        "type": "string"
+                                    },
+                                    "status": {
+                                        "type": "string"
+                                    },
+                                    "is_required": {
+                                        "type": "string"
+                                    },
+                                    "effective_time": {
+                                        "type": "string"
+                                    },
+                                    "published_by": {
+                                        "type": "string"
+                                    },
+                                    "published_at": {
+                                        "type": "string"
+                                    }
+                                }
+                            },
+                            "example": {
+                                "type": "user",
+                                "status": "1"
+                            }
+                        }
+                    }
+                },
+                "description": "获取后台协议列表"
+            }
+        },
+        "/admin/user-agreements": {
+            "post": {
+                "summary": "获取后台用户协议列表",
+                "operationId": "postUserAgreement",
+                "tags": [
+                    "管理后台"
+                ],
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "成功",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "items": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "$ref": "#/components/schemas/AgreementListItemSchema"
+                                                    }
+                                                }
+                                            },
+                                            "required": [
+                                                "items"
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "data"
+                                    ]
+                                },
+                                "example": {
+                                    "data": {
+                                        "items": [
+                                            {
+                                                "id": 1,
+                                                "type": "privacy",
+                                                "type_name": "隐私政策",
+                                                "version": "1.0.0",
+                                                "title": "星返隐私政策",
+                                                "summary": "隐私收集和使用说明",
+                                                "status": 1,
+                                                "status_text": "启用",
+                                                "is_required": 1,
+                                                "effective_time": "2026-04-17 00:00:00",
+                                                "published_by": "system",
+                                                "published_at": "2026-04-17 00:00:00",
+                                                "created_at": "2026-04-17 00:00:00",
+                                                "updated_at": "2026-04-17 00:00:00"
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/BadRequest"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/ServerError"
+                    }
+                },
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "id": {
+                                        "type": "string"
+                                    },
+                                    "type": {
+                                        "type": "string"
+                                    },
+                                    "version": {
+                                        "type": "string"
+                                    },
+                                    "title": {
+                                        "type": "string"
+                                    },
+                                    "content": {
+                                        "type": "string"
+                                    },
+                                    "summary": {
+                                        "type": "string"
+                                    },
+                                    "status": {
+                                        "type": "string"
+                                    },
+                                    "is_required": {
+                                        "type": "string"
+                                    },
+                                    "effective_time": {
+                                        "type": "string"
+                                    },
+                                    "published_by": {
+                                        "type": "string"
+                                    },
+                                    "published_at": {
+                                        "type": "string"
+                                    }
+                                }
+                            },
+                            "example": {
+                                "type": "user",
+                                "status": "1"
+                            }
+                        }
+                    }
+                },
+                "description": "获取后台用户协议列表"
+            }
+        },
+        "/admin/agreements/detail": {
+            "post": {
+                "summary": "获取后台协议详情",
+                "operationId": "postUserAgreement",
+                "tags": [
+                    "管理后台"
+                ],
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "成功",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "agreement": {
+                                                    "$ref": "#/components/schemas/AgreementDetailSchema"
+                                                }
+                                            },
+                                            "required": [
+                                                "agreement"
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "data"
+                                    ]
+                                },
+                                "example": {
+                                    "data": {
+                                        "agreement": {
+                                            "id": 1,
+                                            "type": "user",
+                                            "type_name": "用户协议",
+                                            "version": "1.0.0",
+                                            "title": "星返用户协议",
+                                            "content": "这里是协议正文内容。",
+                                            "summary": "平台用户使用协议说明",
+                                            "status": 1,
+                                            "status_text": "启用",
+                                            "is_required": 1,
+                                            "effective_time": "2026-04-17 00:00:00",
+                                            "published_by": "system",
+                                            "published_at": "2026-04-17 00:00:00",
+                                            "created_at": "2026-04-17 00:00:00",
+                                            "updated_at": "2026-04-17 00:00:00"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/BadRequest"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/ServerError"
+                    }
+                },
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "id": {
+                                        "type": "string"
+                                    },
+                                    "type": {
+                                        "type": "string"
+                                    },
+                                    "version": {
+                                        "type": "string"
+                                    },
+                                    "title": {
+                                        "type": "string"
+                                    },
+                                    "content": {
+                                        "type": "string"
+                                    },
+                                    "summary": {
+                                        "type": "string"
+                                    },
+                                    "status": {
+                                        "type": "string"
+                                    },
+                                    "is_required": {
+                                        "type": "string"
+                                    },
+                                    "effective_time": {
+                                        "type": "string"
+                                    },
+                                    "published_by": {
+                                        "type": "string"
+                                    },
+                                    "published_at": {
+                                        "type": "string"
+                                    }
+                                }
+                            },
+                            "example": {
+                                "id": "1"
+                            }
+                        }
+                    }
+                },
+                "description": "获取后台协议详情"
+            }
+        },
+        "/admin/user-agreements/detail": {
+            "post": {
+                "summary": "获取后台用户协议详情",
+                "operationId": "postUserAgreement",
+                "tags": [
+                    "管理后台"
+                ],
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "成功",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "agreement": {
+                                                    "$ref": "#/components/schemas/AgreementDetailSchema"
+                                                }
+                                            },
+                                            "required": [
+                                                "agreement"
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "data"
+                                    ]
+                                },
+                                "example": {
+                                    "data": {
+                                        "agreement": {
+                                            "id": 1,
+                                            "type": "user",
+                                            "type_name": "用户协议",
+                                            "version": "1.0.0",
+                                            "title": "星返用户协议",
+                                            "content": "这里是协议正文内容。",
+                                            "summary": "平台用户使用协议说明",
+                                            "status": 1,
+                                            "status_text": "启用",
+                                            "is_required": 1,
+                                            "effective_time": "2026-04-17 00:00:00",
+                                            "published_by": "system",
+                                            "published_at": "2026-04-17 00:00:00",
+                                            "created_at": "2026-04-17 00:00:00",
+                                            "updated_at": "2026-04-17 00:00:00"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/BadRequest"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/ServerError"
+                    }
+                },
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "id": {
+                                        "type": "string"
+                                    },
+                                    "type": {
+                                        "type": "string"
+                                    },
+                                    "version": {
+                                        "type": "string"
+                                    },
+                                    "title": {
+                                        "type": "string"
+                                    },
+                                    "content": {
+                                        "type": "string"
+                                    },
+                                    "summary": {
+                                        "type": "string"
+                                    },
+                                    "status": {
+                                        "type": "string"
+                                    },
+                                    "is_required": {
+                                        "type": "string"
+                                    },
+                                    "effective_time": {
+                                        "type": "string"
+                                    },
+                                    "published_by": {
+                                        "type": "string"
+                                    },
+                                    "published_at": {
+                                        "type": "string"
+                                    }
+                                }
+                            },
+                            "example": {
+                                "id": "1"
+                            }
+                        }
+                    }
+                },
+                "description": "获取后台用户协议详情"
+            }
+        },
+        "/admin/agreements/save": {
+            "post": {
+                "summary": "保存后台协议",
+                "operationId": "postUserAgreement",
+                "tags": [
+                    "管理后台"
+                ],
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "成功",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "agreement": {
+                                                    "$ref": "#/components/schemas/AgreementDetailSchema"
+                                                }
+                                            },
+                                            "required": [
+                                                "agreement"
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "data"
+                                    ]
+                                },
+                                "example": {
+                                    "data": {
+                                        "agreement": {
+                                            "id": 1,
+                                            "type": "user",
+                                            "type_name": "用户协议",
+                                            "version": "1.0.0",
+                                            "title": "星返用户协议",
+                                            "content": "这里是协议正文内容。",
+                                            "summary": "平台用户使用协议说明",
+                                            "status": 1,
+                                            "status_text": "启用",
+                                            "is_required": 1,
+                                            "effective_time": "2026-04-17 00:00:00",
+                                            "published_by": "system",
+                                            "published_at": "2026-04-17 00:00:00",
+                                            "created_at": "2026-04-17 00:00:00",
+                                            "updated_at": "2026-04-17 00:00:00"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/BadRequest"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/ServerError"
+                    }
+                },
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "id": {
+                                        "type": "string"
+                                    },
+                                    "type": {
+                                        "type": "string"
+                                    },
+                                    "version": {
+                                        "type": "string"
+                                    },
+                                    "title": {
+                                        "type": "string"
+                                    },
+                                    "content": {
+                                        "type": "string"
+                                    },
+                                    "summary": {
+                                        "type": "string"
+                                    },
+                                    "status": {
+                                        "type": "string"
+                                    },
+                                    "is_required": {
+                                        "type": "string"
+                                    },
+                                    "effective_time": {
+                                        "type": "string"
+                                    },
+                                    "published_by": {
+                                        "type": "string"
+                                    },
+                                    "published_at": {
+                                        "type": "string"
+                                    }
+                                }
+                            },
+                            "example": {
+                                "type": "user",
+                                "version": "1.0.1",
+                                "title": "星返用户协议",
+                                "content": "这里是后台保存的协议正文内容。",
+                                "summary": "后台保存的协议摘要",
+                                "status": "1",
+                                "is_required": "1",
+                                "effective_time": "2026-04-17 00:00:00",
+                                "published_by": "system",
+                                "published_at": "2026-04-17 00:00:00"
+                            }
+                        }
+                    }
+                },
+                "description": "保存后台协议"
+            }
+        },
+        "/admin/user-agreements/save": {
+            "post": {
+                "summary": "保存后台用户协议",
+                "operationId": "postUserAgreement",
+                "tags": [
+                    "管理后台"
+                ],
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "成功",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "agreement": {
+                                                    "$ref": "#/components/schemas/AgreementDetailSchema"
+                                                }
+                                            },
+                                            "required": [
+                                                "agreement"
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "data"
+                                    ]
+                                },
+                                "example": {
+                                    "data": {
+                                        "agreement": {
+                                            "id": 1,
+                                            "type": "user",
+                                            "type_name": "用户协议",
+                                            "version": "1.0.0",
+                                            "title": "星返用户协议",
+                                            "content": "这里是协议正文内容。",
+                                            "summary": "平台用户使用协议说明",
+                                            "status": 1,
+                                            "status_text": "启用",
+                                            "is_required": 1,
+                                            "effective_time": "2026-04-17 00:00:00",
+                                            "published_by": "system",
+                                            "published_at": "2026-04-17 00:00:00",
+                                            "created_at": "2026-04-17 00:00:00",
+                                            "updated_at": "2026-04-17 00:00:00"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/BadRequest"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/ServerError"
+                    }
+                },
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "id": {
+                                        "type": "string"
+                                    },
+                                    "type": {
+                                        "type": "string"
+                                    },
+                                    "version": {
+                                        "type": "string"
+                                    },
+                                    "title": {
+                                        "type": "string"
+                                    },
+                                    "content": {
+                                        "type": "string"
+                                    },
+                                    "summary": {
+                                        "type": "string"
+                                    },
+                                    "status": {
+                                        "type": "string"
+                                    },
+                                    "is_required": {
+                                        "type": "string"
+                                    },
+                                    "effective_time": {
+                                        "type": "string"
+                                    },
+                                    "published_by": {
+                                        "type": "string"
+                                    },
+                                    "published_at": {
+                                        "type": "string"
+                                    }
+                                }
+                            },
+                            "example": {
+                                "type": "user",
+                                "version": "1.0.1",
+                                "title": "星返用户协议",
+                                "content": "这里是后台保存的协议正文内容。",
+                                "summary": "后台保存的协议摘要",
+                                "status": "1",
+                                "is_required": "1",
+                                "effective_time": "2026-04-17 00:00:00",
+                                "published_by": "system",
+                                "published_at": "2026-04-17 00:00:00"
+                            }
+                        }
+                    }
+                },
+                "description": "保存后台用户协议"
+            }
+        },
+        "/admin/agreements/activate": {
+            "post": {
+                "summary": "启用后台协议",
+                "operationId": "postUserAgreement",
+                "tags": [
+                    "管理后台"
+                ],
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "成功",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "agreement": {
+                                                    "$ref": "#/components/schemas/AgreementDetailSchema"
+                                                }
+                                            },
+                                            "required": [
+                                                "agreement"
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "data"
+                                    ]
+                                },
+                                "example": {
+                                    "data": {
+                                        "agreement": {
+                                            "id": 1,
+                                            "type": "user",
+                                            "type_name": "用户协议",
+                                            "version": "1.0.0",
+                                            "title": "星返用户协议",
+                                            "content": "这里是协议正文内容。",
+                                            "summary": "平台用户使用协议说明",
+                                            "status": 1,
+                                            "status_text": "启用",
+                                            "is_required": 1,
+                                            "effective_time": "2026-04-17 00:00:00",
+                                            "published_by": "system",
+                                            "published_at": "2026-04-17 00:00:00",
+                                            "created_at": "2026-04-17 00:00:00",
+                                            "updated_at": "2026-04-17 00:00:00"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/BadRequest"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/ServerError"
+                    }
+                },
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "id": {
+                                        "type": "string"
+                                    },
+                                    "type": {
+                                        "type": "string"
+                                    },
+                                    "version": {
+                                        "type": "string"
+                                    },
+                                    "title": {
+                                        "type": "string"
+                                    },
+                                    "content": {
+                                        "type": "string"
+                                    },
+                                    "summary": {
+                                        "type": "string"
+                                    },
+                                    "status": {
+                                        "type": "string"
+                                    },
+                                    "is_required": {
+                                        "type": "string"
+                                    },
+                                    "effective_time": {
+                                        "type": "string"
+                                    },
+                                    "published_by": {
+                                        "type": "string"
+                                    },
+                                    "published_at": {
+                                        "type": "string"
+                                    }
+                                }
+                            },
+                            "example": {
+                                "id": "1"
+                            }
+                        }
+                    }
+                },
+                "description": "启用后台协议"
+            }
+        },
+        "/admin/user-agreements/activate": {
+            "post": {
+                "summary": "启用后台用户协议",
+                "operationId": "postUserAgreement",
+                "tags": [
+                    "管理后台"
+                ],
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "成功",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "agreement": {
+                                                    "$ref": "#/components/schemas/AgreementDetailSchema"
+                                                }
+                                            },
+                                            "required": [
+                                                "agreement"
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "data"
+                                    ]
+                                },
+                                "example": {
+                                    "data": {
+                                        "agreement": {
+                                            "id": 1,
+                                            "type": "user",
+                                            "type_name": "用户协议",
+                                            "version": "1.0.0",
+                                            "title": "星返用户协议",
+                                            "content": "这里是协议正文内容。",
+                                            "summary": "平台用户使用协议说明",
+                                            "status": 1,
+                                            "status_text": "启用",
+                                            "is_required": 1,
+                                            "effective_time": "2026-04-17 00:00:00",
+                                            "published_by": "system",
+                                            "published_at": "2026-04-17 00:00:00",
+                                            "created_at": "2026-04-17 00:00:00",
+                                            "updated_at": "2026-04-17 00:00:00"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/BadRequest"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/ServerError"
+                    }
+                },
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "id": {
+                                        "type": "string"
+                                    },
+                                    "type": {
+                                        "type": "string"
+                                    },
+                                    "version": {
+                                        "type": "string"
+                                    },
+                                    "title": {
+                                        "type": "string"
+                                    },
+                                    "content": {
+                                        "type": "string"
+                                    },
+                                    "summary": {
+                                        "type": "string"
+                                    },
+                                    "status": {
+                                        "type": "string"
+                                    },
+                                    "is_required": {
+                                        "type": "string"
+                                    },
+                                    "effective_time": {
+                                        "type": "string"
+                                    },
+                                    "published_by": {
+                                        "type": "string"
+                                    },
+                                    "published_at": {
+                                        "type": "string"
+                                    }
+                                }
+                            },
+                            "example": {
+                                "id": "1"
+                            }
+                        }
+                    }
+                },
+                "description": "启用后台用户协议"
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "AgreementDetailSchema": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "type": {
+                        "type": "string"
+                    },
+                    "type_name": {
+                        "type": "string"
+                    },
+                    "version": {
+                        "type": "string"
+                    },
+                    "title": {
+                        "type": "string"
+                    },
+                    "content": {
+                        "type": "string"
+                    },
+                    "summary": {
+                        "type": "string"
+                    },
+                    "status": {
+                        "type": "integer"
+                    },
+                    "status_text": {
+                        "type": "string"
+                    },
+                    "is_required": {
+                        "type": "integer"
+                    },
+                    "effective_time": {
+                        "type": "string"
+                    },
+                    "published_by": {
+                        "type": "string"
+                    },
+                    "published_at": {
+                        "type": "string"
+                    },
+                    "created_at": {
+                        "type": "string"
+                    },
+                    "updated_at": {
+                        "type": "string"
+                    }
+                }
+            },
+            "AgreementListItemSchema": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "type": {
+                        "type": "string"
+                    },
+                    "type_name": {
+                        "type": "string"
+                    },
+                    "version": {
+                        "type": "string"
+                    },
+                    "title": {
+                        "type": "string"
+                    },
+                    "summary": {
+                        "type": "string"
+                    },
+                    "status": {
+                        "type": "integer"
+                    },
+                    "status_text": {
+                        "type": "string"
+                    },
+                    "is_required": {
+                        "type": "integer"
+                    },
+                    "effective_time": {
+                        "type": "string"
+                    },
+                    "published_by": {
+                        "type": "string"
+                    },
+                    "published_at": {
+                        "type": "string"
+                    },
+                    "created_at": {
+                        "type": "string"
+                    },
+                    "updated_at": {
+                        "type": "string"
+                    }
+                }
+            },
+            "ErrorResponse": {
+                "type": "object",
+                "properties": {
+                    "error": {
+                        "type": "string"
+                    },
+                    "requestId": {
+                        "type": "string"
+                    },
+                    "errors": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "required": [
+                    "error",
+                    "requestId"
+                ]
+            }
+        },
+        "responses": {
+            "BadRequest": {
+                "description": "请求参数错误",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "#/components/schemas/ErrorResponse"
+                        }
+                    }
+                }
+            },
+            "ServerError": {
+                "description": "服务器内部错误",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "#/components/schemas/ErrorResponse"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "servers": [
+        {
+            "url": "http://127.0.0.1:8884"
+        }
+    ],
+    "tags": [
+        {
+            "name": "健康检查",
+            "description": "服务健康检查相关接口"
+        },
+        {
+            "name": "认证",
+            "description": "注册、登录、退出和短信验证码相关接口"
+        },
+        {
+            "name": "二维码登录",
+            "description": "星返APP扫码登录相关接口"
+        },
+        {
+            "name": "协议",
+            "description": "用户协议、隐私政策和 Cookie 政策相关接口"
+        },
+        {
+            "name": "管理后台",
+            "description": "后台仪表盘与协议管理相关接口"
+        },
+        {
+            "name": "用户",
+            "description": "当前登录用户信息相关接口"
+        },
+        {
+            "name": "转链",
+            "description": "转链和短链生成相关接口"
+        },
+        {
+            "name": "系统",
+            "description": "系统文档和调试辅助接口"
+        }
+    ]
+}
